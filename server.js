@@ -10,7 +10,6 @@ let random = require('./modules/random');
 grassArr = [];
 grassEaterArr = [];
 matrix = [];
-grassHashiv = 0;
 //! Setting global arrays  -- END
 
 
@@ -78,7 +77,6 @@ function creatingObjects() {
             } else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
-                grassHashiv++;
             }
         }
     }
@@ -100,7 +98,7 @@ function game() {
     //! Object to send
     let sendData = {
         matrix: matrix,
-        grassCounter: grassHashiv
+        grassCounter: grassArr.length
     }
 
     //! Send data over the socket to clients who listens "data"
