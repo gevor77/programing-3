@@ -1,7 +1,7 @@
 
 //! Setup function fires automatically
 function setup() {
-
+    var weath = 'winter'
     var socket = io();
 
     var side = 30;
@@ -15,7 +15,10 @@ function setup() {
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
 
     socket.on("data", drawCreatures);
-
+    socket.on("weather", function (data)
+    {
+        weath = data;
+    })
     function drawCreatures(data) {
         //! after getting data pass it to matrix variable
         matrix = data.matrix;
@@ -30,8 +33,23 @@ function setup() {
         for (var i = 0; i < matrix.length; i++) {
             for (var j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
-                    fill("green");
-                    rect(j * side, i * side, side, side);
+                        if(weath == "spring")
+                        {
+                            fill("green")
+                        }
+                        else if(weath == "summer")
+                        {
+                            fill("black");
+                        }
+                        else if(weath == "winter")
+                        {
+                            fill("white")
+                        }
+                        else if(weath == "autumn")
+                        {
+                            fill("#4dffa6")
+                        }
+                        rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 2) {
                     fill("orange");
                     rect(j * side, i * side, side, side);
@@ -51,4 +69,8 @@ function setup() {
             }
         }
     }
+}
+
+function kill() {
+    socket.emit("kill")
 }

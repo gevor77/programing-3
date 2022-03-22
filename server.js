@@ -1,4 +1,5 @@
-
+// 
+weath = "winter"
 //! Requiring modules  --  START
 var Grass = require("./modules/Grass.js");
 var GrassEater = require("./modules/GrassEater.js");
@@ -52,7 +53,22 @@ function matrixGenerator(matrixSize, grass, grassEater, grassEaterEater, waterAr
 matrixGenerator(20, 1, 1);
 //! Creating MATRIX -- END
 
-
+function weather() {
+    if (weath == "winter") {
+        weath = "spring"
+    }
+    else if (weath == "spring") {
+        weath = "summer"
+    }
+    else if (weath == "summer") {
+        weath = "autumn"
+    }
+    else if (weath == "autumn") {
+        weath = "winter"
+    }
+    io.sockets.emit('weather', weath)
+}
+setInterval(weather, 5000);
 
 //! SERVER STUFF  --  START
 var express = require('express');
@@ -85,9 +101,12 @@ creatingObjects();
 
 function game() {
     if (grassArr[0] !== undefined) {
-        for (var i in grassArr) {
-            grassArr[i].mul();
+        if(weath != 'autumn') {
+            for (var i in grassArr) {
+                grassArr[i].mul();
+            }
         }
+        
     }
     if (grassEaterArr[0] !== undefined) {
         for (var i in grassEaterArr) {
@@ -108,3 +127,27 @@ function game() {
 
 
 setInterval(game, 1000)
+
+//// Add event
+function kill() {
+    grassArr = [];
+    grassEaterArr = []
+    meatEaterArr = []
+    allEaterArr = []
+    hunterArr = []
+    for (var y = 0; y < matrix.length; y++) {
+        for (var x = 0; x < matrix[y].length; x++) {
+            matrix[y][x] = 0;
+        }
+    }
+    io.sockets.emit("send matrix", matrix);
+}
+////   Create static Json
+var statistics = {};
+
+setInterval(function () {
+    statistics.grass = grassArr.length;
+    statistics.grassEater = grassEaterArr.length;
+    fs.writeFile("statistics.json", JSON.stringify(statistics), function () {
+    })
+}, 1000)
