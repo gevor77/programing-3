@@ -97,7 +97,6 @@ function creatingObjects() {
         }
     }
 }
-creatingObjects();
 
 function game() {
     if (grassArr[0] !== undefined) {
@@ -142,6 +141,10 @@ function kill() {
     }
     io.sockets.emit("send matrix", matrix);
 }
+io.on('connection', function (socket) {
+    creatingObjects();
+    socket.on("kill", kill);
+});
 ////   Create static Json
 var statistics = {};
 
