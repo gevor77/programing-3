@@ -139,7 +139,6 @@ function kill() {
             matrix[y][x] = 0;
         }
     }
-    io.sockets.emit("send matrix", matrix);
 }
 io.on('connection', function (socket) {
     creatingObjects();
