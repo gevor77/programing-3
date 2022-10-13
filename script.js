@@ -1,8 +1,7 @@
-
+var socket = io();
 //! Setup function fires automatically
 function setup() {
     var weath = 'winter'
-    var socket = io();
 
     var side = 30;
 
@@ -21,8 +20,11 @@ function setup() {
     })
     function drawCreatures(data) {
         //! after getting data pass it to matrix variable
+        console.log(data);
+        
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
+        grassEaterCountElement.innerText = data.grassEaterCount
         //! Every time it creates new Canvas woth new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)
         //! clearing background by setting it to new grey color

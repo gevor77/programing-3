@@ -50,7 +50,7 @@ function matrixGenerator(matrixSize, grass, grassEater, grassEaterEater, waterAr
         matrix[customY][customX] = 5;
     }
 }
-matrixGenerator(20, 1, 1);
+matrixGenerator(20, 20, 10);
 //! Creating MATRIX -- END
 
 function weather() {
@@ -80,6 +80,7 @@ app.get('/', function (req, res) {
     res.redirect('index.html');
 });
 server.listen(3000);
+let fs = require('fs')
 //! SERVER STUFF END  --  END
 
 
@@ -112,11 +113,11 @@ function game() {
             grassEaterArr[i].eat();
         }
     }
-
     //! Object to send
     let sendData = {
         matrix: matrix,
-        grassCounter: grassArr.length
+        grassCounter: grassArr.length,
+        grassEaterCount: grassEaterArr.length
     }
 
     //! Send data over the socket to clients who listens "data"
