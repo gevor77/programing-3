@@ -9,7 +9,7 @@
   "author": "ananun",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.19.2",
     "socket.io": "^2.2.0"
   }
 }
